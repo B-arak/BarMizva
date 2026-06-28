@@ -1072,8 +1072,7 @@ document.addEventListener('input',  scheduleSave);
 document.addEventListener('change', scheduleSave);
 
 function exportPDF() {
-  const entry = boysCache.find(b => b.id === currentBoyId);
-  const data = (entry && entry.data) ? entry.data : {};
+  const data = collectFormData();
   const g = id => data[id] || '';
   const boyName = (g('firstName') + ' ' + g('lastName')).trim() || 'לא הוזן';
 
