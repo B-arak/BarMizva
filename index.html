@@ -921,8 +921,9 @@ async function loadBoys() {
 
 async function newBoy() {
   await saveAll(true);
+  const { data: { user } } = await sb.auth.getUser();
   const { data, error } = await sb.from('boys')
-    .insert({ name: 'נער חדש', data: {} })
+    .insert({ name: 'נער חדש', data: {}, user_id: user.id })
     .select().single();
   if (error) { showToast('שגיאה ביצירת גיליון'); console.error(error); return; }
   boysCache.unshift({ ...data });
