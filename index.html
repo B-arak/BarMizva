@@ -1080,19 +1080,19 @@ function exportPDF() {
   const logoSrc = document.querySelector('header img') ? document.querySelector('header img').src : '';
   const logoHtml = logoSrc ? `<img src="${logoSrc}" style="height:60px;width:60px;object-fit:contain;">` : '';
 
-  const S = 'padding:6px 14px;border-bottom:1px solid #eee;';
-  const SL = S + 'width:38%;color:#777;font-size:11.5px;font-weight:600;';
-  const SV = S + 'font-size:12px;';
+  const S = 'padding:4px 10px;border-bottom:1px solid #eee;';
+  const SL = S + 'width:40%;color:#777;font-size:10.5px;font-weight:600;';
+  const SV = S + 'font-size:11px;';
   const SH = 'background:#fdf8ef;';
   const row = (l,v,alt) => `<tr${alt?' style="'+SH+'"':''}><td style="${SL}">${l}</td><td style="${SV}">${v||'&nbsp;'}</td></tr>`;
 
   const W = 'width:100%;border-collapse:collapse;border-spacing:0;';
   const sec = (t,color,border) => `
-    <div style="break-inside:avoid;page-break-inside:avoid;margin-bottom:14px;border:1px solid ${border};border-radius:4px;overflow:hidden">
+    <div style="break-inside:avoid;page-break-inside:avoid;margin-bottom:8px;border:1px solid ${border};border-radius:4px;overflow:hidden">
       <table style="${W}">
-        <tr><td colspan="3" style="background:${color};color:white;padding:10px 14px;font-weight:700;font-size:13px;letter-spacing:0.03em">${t}</td></tr>`;
+        <tr><td colspan="3" style="background:${color};color:white;padding:7px 10px;font-weight:700;font-size:12px;letter-spacing:0.02em">${t}</td></tr>`;
   const secEnd = `</table></div>`;
-  const sub = t => `<tr><td colspan="3" style="background:#e8eef8;color:#2a4a7c;padding:7px 14px;font-weight:700;font-size:12px;border-bottom:1px solid #d0dcea">${t}</td></tr>`;
+  const sub = t => `<tr><td colspan="3" style="background:#e8eef8;color:#2a4a7c;padding:5px 10px;font-weight:700;font-size:11px;border-bottom:1px solid #d0dcea">${t}</td></tr>`;
 
   const siblingsRows = [1,2,3].filter(i => g('sibling'+i+'name')).map((i,idx) =>
     row('אח / אחות ' + i, g('sibling'+i+'name') + (g('sibling'+i+'age') ? ' &nbsp;|&nbsp; גיל: ' + g('sibling'+i+'age') : ''), idx%2)).join('');
@@ -1107,103 +1107,119 @@ function exportPDF() {
   const html = `
   <style>
     * { font-family: Arial, sans-serif !important; box-sizing: border-box; }
-    body { direction: rtl; word-spacing: 0.2em; letter-spacing: 0.01em; margin:0; }
+    body { direction: rtl; word-spacing: 0.15em; letter-spacing: 0.01em; margin:0; }
     table { border-spacing: 0; width: 100%; border-collapse: collapse; }
+    .col2 { display:table; width:100%; table-layout:fixed; margin-bottom:8px; }
+    .col2-r, .col2-l { display:table-cell; vertical-align:top; }
+    .col2-r { padding-left:5px; }
+    .col2-l { padding-right:5px; }
   </style>
-  <div style="direction:rtl;color:#2c2c2c;padding:20px 24px;font-size:12.5px;line-height:1.65;max-width:780px">
+  <div style="direction:rtl;color:#2c2c2c;padding:14px 18px;font-size:11px;line-height:1.5;max-width:800px">
 
     <!-- כותרת -->
-    <div style="display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:18px;border-bottom:3px solid #c8922a;padding-bottom:14px">
+    <div style="display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:12px;border-bottom:2px solid #c8922a;padding-bottom:10px">
       ${logoHtml}
       <div style="text-align:center">
-        <div style="font-size:22px;font-weight:900;color:#2a4a7c;letter-spacing:0.02em">גיליון הערכות – בר מצווה</div>
-        <div style="font-size:17px;color:#c8922a;font-weight:700;margin-top:4px">${boyName}</div>
+        <div style="font-size:19px;font-weight:900;color:#2a4a7c">גיליון הערכות – בר מצווה</div>
+        <div style="font-size:15px;color:#c8922a;font-weight:700;margin-top:2px">${boyName}</div>
       </div>
     </div>
 
-    <!-- פרטי הנער -->
-    ${sec('פרטי הנער','#c8922a','#e0d0b8')}
-      ${row('שם פרטי ושם משפחה', boyName)}
-      ${row('תאריך לידה עברי', g('dobHebrew'), true)}
-      ${row('תאריך לידה לועזי', g('dobGregorian'))}
-      ${row('פרשת השבוע', g('parasha'), true)}
-      ${row('קריאה מיוחדת', g('specialReading'))}
-      ${row('נוסח', g('nusach'), true)}
-    ${secEnd}
+    <!-- שורה 1: פרטי הנער + פרטי האירוע -->
+    <div class="col2">
+      <div class="col2-r" style="width:38%">
+        ${sec('פרטי הנער','#c8922a','#e0d0b8')}
+          ${row('שם מלא', boyName)}
+          ${row('ת. לידה עברי', g('dobHebrew'), true)}
+          ${row('ת. לידה לועזי', g('dobGregorian'))}
+          ${row('פרשת השבוע', g('parasha'), true)}
+          ${row('קריאה מיוחדת', g('specialReading'))}
+          ${row('נוסח', g('nusach'), true)}
+        ${secEnd}
+      </div>
+      <div class="col2-l" style="width:62%">
+        ${sec('פרטי האירוע','#c8922a','#e0d0b8')}
+          ${row('בית כנסת / אולם', g('synagogueName'))}
+          ${row('כתובת', g('synagogueAddress'), true)}
+          ${row('איש קשר (גבאי)', g('contactPhone'))}
+          ${row('אצל מי המפתחות', g('keyHolder'), true)}
+          ${row('צפי נוכחים', g('attendees'))}
+          ${row('חזרה גנרלית', g('rehearsalDate'), true)}
+          ${row('הנחת תפילין', g('prayerDate'))}
+          ${row('תאריך שבת', g('shabbatDate'), true)}
+          ${row('סגנון האירוע', g('eventStyle'))}
+          ${row('בקשות מיוחדות', g('specialRequests'), true)}
+          ${siblingsRows}
+        ${secEnd}
+      </div>
+    </div>
 
-    <!-- פרטי האירוע -->
-    ${sec('פרטי האירוע','#c8922a','#e0d0b8')}
-      ${row('שם בית כנסת / אולם', g('synagogueName'))}
-      ${row('כתובת בית הכנסת / האולם', g('synagogueAddress'), true)}
-      ${row('טלפון איש קשר (גבאי)', g('contactPhone'))}
-      ${row('אצל מי המפתחות לארון הקודש', g('keyHolder'), true)}
-      ${row('צפי נוכחים', g('attendees'))}
-      ${row('תאריך חזרה גנרלית', g('rehearsalDate'), true)}
-      ${row('תאריך הנחת תפילין', g('prayerDate'))}
-      ${row('תאריך שבת', g('shabbatDate'), true)}
-      ${row('סגנון האירוע', g('eventStyle'))}
-      ${row('בקשות מיוחדות', g('specialRequests'), true)}
-      ${siblingsRows}
-    ${secEnd}
+    <!-- שורה 2: משפחה + נותני שירות -->
+    <div class="col2">
+      <div class="col2-r" style="width:50%">
+        ${sec('פרטי המשפחה','#c8922a','#e0d0b8')}
+          ${sub('צד האב')}
+          ${row('שם האב', g('fatherName'))}
+          ${row('עיסוק', g('fatherJob'), true)}
+          ${row('סבא מצד האב', g('grandfatherFather'))}
+          ${row('סבתא מצד האב', g('grandmotherFather'), true)}
+          ${row('סבא/סבתא רבה', g('greatGrandFather'))}
+          ${sub('צד האם')}
+          ${row('שם האם', g('motherName'))}
+          ${row('עיסוק', g('motherJob'), true)}
+          ${row('סבא מצד האם', g('grandfatherMother'))}
+          ${row('סבתא מצד האם', g('grandmotherMother'), true)}
+          ${row('סבא/סבתא רבה', g('greatGrandMother'))}
+        ${secEnd}
+      </div>
+      <div class="col2-l" style="width:50%">
+        ${sec('נותני שירות','#c8922a','#e0d0b8')}
+          ${sub('חזן / פייטן')}
+          ${row('שם', g('cantor'))}
+          ${row('טלפון', g('cantorPhone'), true)}
+          ${row('הערות', g('cantorNotes'))}
+          ${sub('נגנים')}
+          ${row('שם', g('musician'))}
+          ${row('טלפון', g('musicianPhone'), true)}
+          ${row('הערות', g('musicianNotes'))}
+          ${sub('נותן שירות נוסף')}
+          ${row('שם / תפקיד', g('service3'))}
+          ${row('טלפון', g('service3Phone'), true)}
+          ${row('הערות', g('service3Notes'))}
+        ${secEnd}
+      </div>
+    </div>
 
-    <!-- פרטי המשפחה -->
-    ${sec('פרטי המשפחה','#c8922a','#e0d0b8')}
-      ${sub('צד האב')}
-      ${row('שם האב', g('fatherName'))}
-      ${row('עיסוק', g('fatherJob'), true)}
-      ${row('סבא מצד האב', g('grandfatherFather'))}
-      ${row('סבתא מצד האב', g('grandmotherFather'), true)}
-      ${row('סבא / סבתא רבה (צד האב)', g('greatGrandFather'))}
-      ${sub('צד האם')}
-      ${row('שם האם', g('motherName'))}
-      ${row('עיסוק', g('motherJob'), true)}
-      ${row('סבא מצד האם', g('grandfatherMother'))}
-      ${row('סבתא מצד האם', g('grandmotherMother'), true)}
-      ${row('סבא / סבתא רבה (צד האם)', g('greatGrandMother'))}
-    ${secEnd}
+    <!-- שורה 3: עליות + כיבודים -->
+    <div class="col2">
+      <div class="col2-r" style="width:38%">
+        ${sec('עליות לתורה','#2a4a7c','#c0cfe8')}
+          <tr style="background:#e8eef8">
+            <td style="${SL}font-weight:700;color:#2a4a7c">עלייה</td>
+            <td style="${SV}font-weight:700;color:#2a4a7c">שם</td>
+            <td style="${SV}font-weight:700;color:#2a4a7c">קרבה</td>
+          </tr>
+          <tr><td style="${SL}">כהן</td><td style="${SV}">${g('al_kohen_name')||'&nbsp;'}</td><td style="${SV}">${g('al_kohen_rel')||'&nbsp;'}</td></tr>
+          <tr style="${SH}"><td style="${SL}">לוי</td><td style="${SV}">${g('al_levi_name')||'&nbsp;'}</td><td style="${SV}">${g('al_levi_rel')||'&nbsp;'}</td></tr>
+          <tr><td style="${SL}">ישראל</td><td style="${SV}">${g('al_israel_name')||'&nbsp;'}</td><td style="${SV}">${g('al_israel_rel')||'&nbsp;'}</td></tr>
+          <tr style="${SH}"><td style="${SL}">עלייה רביעית</td><td style="${SV}">${g('al_fourth_name')||'&nbsp;'}</td><td style="${SV}">${g('al_fourth_rel')||'&nbsp;'}</td></tr>
+          ${g('aliyahNotes') ? `<tr><td colspan="3" style="${S}color:#888;font-size:10px">הערות: ${g('aliyahNotes')}</td></tr>` : ''}
+        ${secEnd}
+      </div>
+      <div class="col2-l" style="width:62%">
+        ${sec('כיבודים','#2a4a7c','#c0cfe8')}
+          <tr style="background:#e8eef8">
+            <td style="${SL}font-weight:700;color:#2a4a7c">כיבוד</td>
+            <td style="${SV}font-weight:700;color:#2a4a7c">שם</td>
+            <td style="${SV}font-weight:700;color:#2a4a7c">קרבה</td>
+          </tr>
+          ${honorsRows}
+          ${g('honorsNotes') ? `<tr><td colspan="3" style="${S}color:#888;font-size:10px">הערות: ${g('honorsNotes')}</td></tr>` : ''}
+        ${secEnd}
+      </div>
+    </div>
 
-    <!-- נותני שירות -->
-    ${sec('נותני שירות','#c8922a','#e0d0b8')}
-      ${sub('חזן / פייטן')}
-      ${row('שם', g('cantor'))}
-      ${row('טלפון', g('cantorPhone'), true)}
-      ${row('הערות', g('cantorNotes'))}
-      ${sub('נגנים')}
-      ${row('שם', g('musician'))}
-      ${row('טלפון', g('musicianPhone'), true)}
-      ${row('הערות', g('musicianNotes'))}
-      ${sub('נותן שירות נוסף')}
-      ${row('שם / תפקיד', g('service3'))}
-      ${row('טלפון', g('service3Phone'), true)}
-      ${row('הערות', g('service3Notes'))}
-    ${secEnd}
-
-    <!-- עליות לתורה -->
-    ${sec('עליות לתורה – יום שני / חמישי','#2a4a7c','#c0cfe8')}
-      <tr style="background:#e8eef8">
-        <td style="padding:6px 14px;font-weight:700;width:38%;color:#2a4a7c;border-bottom:1px solid #d0dcea">עלייה</td>
-        <td style="padding:6px 14px;font-weight:700;color:#2a4a7c;border-bottom:1px solid #d0dcea">שם</td>
-        <td style="padding:6px 14px;font-weight:700;color:#2a4a7c;border-bottom:1px solid #d0dcea">קרבה</td>
-      </tr>
-      <tr><td style="${SL}">כהן</td><td style="${SV}">${g('al_kohen_name')||'&nbsp;'}</td><td style="${SV}">${g('al_kohen_rel')||'&nbsp;'}</td></tr>
-      <tr style="${SH}"><td style="${SL}">לוי</td><td style="${SV}">${g('al_levi_name')||'&nbsp;'}</td><td style="${SV}">${g('al_levi_rel')||'&nbsp;'}</td></tr>
-      <tr><td style="${SL}">ישראל</td><td style="${SV}">${g('al_israel_name')||'&nbsp;'}</td><td style="${SV}">${g('al_israel_rel')||'&nbsp;'}</td></tr>
-      <tr style="${SH}"><td style="${SL}">עלייה רביעית (ר"ח / חוה"מ)</td><td style="${SV}">${g('al_fourth_name')||'&nbsp;'}</td><td style="${SV}">${g('al_fourth_rel')||'&nbsp;'}</td></tr>
-      ${g('aliyahNotes') ? `<tr><td colspan="3" style="padding:6px 14px;color:#888;font-size:11px">הערות: ${g('aliyahNotes')}</td></tr>` : ''}
-    ${secEnd}
-
-    <!-- כיבודים -->
-    ${sec('כיבודים','#2a4a7c','#c0cfe8')}
-      <tr style="background:#e8eef8">
-        <td style="padding:6px 14px;font-weight:700;width:38%;color:#2a4a7c;border-bottom:1px solid #d0dcea">כיבוד</td>
-        <td style="padding:6px 14px;font-weight:700;color:#2a4a7c;border-bottom:1px solid #d0dcea">שם</td>
-        <td style="padding:6px 14px;font-weight:700;color:#2a4a7c;border-bottom:1px solid #d0dcea">קרבה</td>
-      </tr>
-      ${honorsRows}
-      ${g('honorsNotes') ? `<tr><td colspan="3" style="padding:6px 14px;color:#888;font-size:11px">הערות: ${g('honorsNotes')}</td></tr>` : ''}
-    ${secEnd}
-
-    <div style="text-align:center;margin-top:10px;font-size:10px;color:#bbb;border-top:1px solid #eee;padding-top:8px">
+    <div style="text-align:center;margin-top:6px;font-size:9px;color:#bbb;border-top:1px solid #eee;padding-top:6px">
       הופק על ידי מערכת גיליון הערכות בר מצווה – צהר
     </div>
   </div>`;
