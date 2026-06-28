@@ -1085,12 +1085,6 @@ function exportPDF() {
   const SV = S + 'font-size:12px;';
   const SH = 'background:#fdf8ef;';
   const row = (l,v,alt) => `<tr${alt?' style="'+SH+'"':''}><td style="${SL}">${l}</td><td style="${SV}">${v||'&nbsp;'}</td></tr>`;
-  const honorsRows = HONORS.map((h,i) => `
-    <tr${i%2?' style="'+SH+'"':''}>
-      <td style="${SL}">${h}</td>
-      <td style="${S}">${g('honor_'+h+'_name')||'&nbsp;'}</td>
-      <td style="${S}">${g('honor_'+h+'_rel')||'&nbsp;'}</td>
-    </tr>`).join('');
 
   const W = 'width:100%;border-collapse:collapse;border-spacing:0;';
   const sec = (t,color,border) => `
