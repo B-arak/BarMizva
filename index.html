@@ -374,18 +374,22 @@
     <div class="fields">
       <div class="field-row two">
         <div class="field">
-          <label>שם בית הכנסת / שולחן</label>
-          <input type="text" id="synagogueName" placeholder="שם בית הכנסת">
+          <label>שם בית כנסת / אולם</label>
+          <input type="text" id="synagogueName" placeholder="שם בית הכנסת / האולם">
         </div>
         <div class="field">
           <label>טלפון איש קשר (גבאי)</label>
           <input type="tel" id="contactPhone" placeholder="050-0000000">
         </div>
       </div>
-      <div class="field-row single">
+      <div class="field-row two">
         <div class="field">
-          <label>מי המפתחות לבית הכנסת ולארון קודש</label>
+          <label>אצל מי המפתחות לארון הקודש ולבית הכנסת</label>
           <input type="text" id="keyHolder" placeholder="שם + טלפון">
+        </div>
+        <div class="field">
+          <label>צפי נוכחים</label>
+          <input type="number" id="attendees" placeholder="מספר משוער" min="0">
         </div>
       </div>
       <div class="field-row">
@@ -422,8 +426,8 @@
         <label>סגנון האירוע</label>
         <div class="radio-group" style="flex-wrap:wrap; gap:10px;">
           <label><input type="radio" name="eventStyle" value="משפחתי"> משפחתי</label>
+          <label><input type="radio" name="eventStyle" value="הצטרפות לתפילה"> הצטרפות לתפילה</label>
           <label><input type="radio" name="eventStyle" value="תפילה פרטית"> תפילה פרטית</label>
-          <label><input type="radio" name="eventStyle" value="תפילה מסגרת"> תפילה מסגרת</label>
         </div>
       </div>
 
@@ -665,7 +669,7 @@ function buildHonorsTable() {
 
 const FIELD_IDS = [
   'firstName','lastName','dobHebrew','dobGregorian','parasha','specialReading',
-  'synagogueName','contactPhone','keyHolder','equipment','lyricsDelivery',
+  'synagogueName','contactPhone','keyHolder','attendees','equipment','lyricsDelivery',
   'rehearsalDate','prayerDate','shabbatDate','eventOther','specialRequests',
   'fatherName','fatherJob','grandfatherFather','grandmotherFather','greatGrandFather',
   'motherName','motherJob','grandfatherMother','grandmotherMother','greatGrandMother',
@@ -784,6 +788,7 @@ function exportPDF() {
       <tr><td style="padding:4px 8px;width:35%;color:#888;font-size:11px">בית כנסת</td><td style="padding:4px 8px;font-weight:600">${g('synagogueName')}</td></tr>
       <tr style="background:#fdf8ef"><td style="padding:4px 8px;color:#888;font-size:11px">איש קשר</td><td style="padding:4px 8px">${g('contactPhone')}</td></tr>
       <tr><td style="padding:4px 8px;color:#888;font-size:11px">מפתחות</td><td style="padding:4px 8px">${g('keyHolder')}</td></tr>
+      <tr style="background:#fdf8ef"><td style="padding:4px 8px;color:#888;font-size:11px">צפי נוכחים</td><td style="padding:4px 8px">${g('attendees')}</td></tr>
       <tr style="background:#fdf8ef"><td style="padding:4px 8px;color:#888;font-size:11px">חזרה גנרלית</td><td style="padding:4px 8px">${g('rehearsalDate')}</td></tr>
       <tr><td style="padding:4px 8px;color:#888;font-size:11px">הלחת תפילות</td><td style="padding:4px 8px">${g('prayerDate')}</td></tr>
       <tr style="background:#fdf8ef"><td style="padding:4px 8px;color:#888;font-size:11px">תאריך שבת</td><td style="padding:4px 8px">${g('shabbatDate')}</td></tr>
