@@ -1085,13 +1085,6 @@ function exportPDF() {
   const SV = S + 'font-size:12px;';
   const SH = 'background:#fdf8ef;';
   const row = (l,v,alt) => `<tr${alt?' style="'+SH+'"':''}><td style="${SL}">${l}</td><td style="${SV}">${v||'&nbsp;'}</td></tr>`;
-  const secGold = t => `<tr><td colspan="2" style="background:#c8922a;color:white;padding:9px 14px;font-weight:700;font-size:13px;letter-spacing:0.03em">${t}</td></tr>`;
-  const secBlue = t => `<tr><td colspan="2" style="background:#2a4a7c;color:white;padding:9px 14px;font-weight:700;font-size:13px;letter-spacing:0.03em">${t}</td></tr>`;
-  const subHdr = t => `<tr><td colspan="2" style="background:#e8eef8;color:#2a4a7c;padding:7px 14px;font-weight:700;font-size:12px">${t}</td></tr>`;
-
-  const siblingsRows = [1,2,3].filter(i => g('sibling'+i+'name')).map((i,idx) =>
-    row('אח / אחות ' + i, g('sibling'+i+'name') + (g('sibling'+i+'age') ? ' &nbsp;|&nbsp; גיל: ' + g('sibling'+i+'age') : ''), idx%2)).join('');
-
   const honorsRows = HONORS.map((h,i) => `
     <tr${i%2?' style="'+SH+'"':''}>
       <td style="${SL}">${h}</td>
