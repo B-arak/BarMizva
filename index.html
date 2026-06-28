@@ -382,6 +382,12 @@
           <input type="tel" id="contactPhone" placeholder="050-0000000">
         </div>
       </div>
+      <div class="field-row single">
+        <div class="field">
+          <label>כתובת בית הכנסת / האולם</label>
+          <input type="text" id="synagogueAddress" placeholder="רחוב, מספר, עיר">
+        </div>
+      </div>
       <div class="field-row two">
         <div class="field">
           <label>אצל מי המפתחות לארון הקודש ולבית הכנסת</label>
@@ -672,7 +678,7 @@ function buildHonorsTable() {
 
 const FIELD_IDS = [
   'firstName','lastName','dobHebrew','dobGregorian','parasha','specialReading',
-  'synagogueName','contactPhone','keyHolder','attendees','equipment','lyricsDelivery',
+  'synagogueName','synagogueAddress','contactPhone','keyHolder','attendees',
   'rehearsalDate','prayerDate','shabbatDate','specialRequests',
   'sibling1name','sibling1age','sibling2name','sibling2age','sibling3name','sibling3age',
   'fatherName','fatherJob','grandfatherFather','grandmotherFather','greatGrandFather',
@@ -790,7 +796,8 @@ function exportPDF() {
     <div style="background:#c8922a;color:white;padding:7px 12px;font-weight:700;border-radius:6px;margin-bottom:8px">פרטי האירוע</div>
     <table style="width:100%;border-collapse:collapse;margin-bottom:14px">
       <tr><td style="padding:4px 8px;width:35%;color:#888;font-size:11px">בית כנסת</td><td style="padding:4px 8px;font-weight:600">${g('synagogueName')}</td></tr>
-      <tr style="background:#fdf8ef"><td style="padding:4px 8px;color:#888;font-size:11px">איש קשר</td><td style="padding:4px 8px">${g('contactPhone')}</td></tr>
+      <tr style="background:#fdf8ef"><td style="padding:4px 8px;color:#888;font-size:11px">כתובת</td><td style="padding:4px 8px">${g('synagogueAddress')}</td></tr>
+      <tr><td style="padding:4px 8px;color:#888;font-size:11px">איש קשר</td><td style="padding:4px 8px">${g('contactPhone')}</td></tr>
       <tr><td style="padding:4px 8px;color:#888;font-size:11px">מפתחות</td><td style="padding:4px 8px">${g('keyHolder')}</td></tr>
       <tr style="background:#fdf8ef"><td style="padding:4px 8px;color:#888;font-size:11px">צפי נוכחים</td><td style="padding:4px 8px">${g('attendees')}</td></tr>
       <tr style="background:#fdf8ef"><td style="padding:4px 8px;color:#888;font-size:11px">חזרה גנרלית</td><td style="padding:4px 8px">${g('rehearsalDate')}</td></tr>
