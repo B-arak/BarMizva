@@ -1087,7 +1087,12 @@ function exportPDF() {
     </tr>`).join('');
 
   const html = `
-  <div style="font-family:Arial,sans-serif;direction:rtl;color:#2c2c2c;padding:20px;font-size:12px">
+  <style>
+    * { font-family: Arial, sans-serif !important; word-spacing: 0.15em; }
+    td, th { white-space: nowrap; }
+    .lbl { white-space: pre; }
+  </style>
+  <div style="font-family:Arial,sans-serif;direction:rtl;color:#2c2c2c;padding:20px;font-size:12px;unicode-bidi:embed">
     <div style="text-align:center;margin-bottom:16px;display:flex;align-items:center;justify-content:center;gap:12px">
       ${logoHtml}
       <div>
